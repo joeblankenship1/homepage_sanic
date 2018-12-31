@@ -1,17 +1,33 @@
 from sanic import Sanic
-from sanic.response import json
-from config import DB_HOST, DB_NAME, DB_USER
+from sanic.response import json, html, text
+from jinja2 import Environment, PackageLoader, select_autoescape
+
+env = Environment(
+    loader=PackageLoader('main', 'templates'),
+    autoescape=select_autoescape(['html', 'xml', 'tpl'])
+)
 
 
-app = Sanic()
-app.config.DB_NAME = DB_NAME
-app.config.DB_USER = DB_USER
-app.config.DB_HOST = DB_HOST
+def template(tpl, **kwargs):
+    template = env.get_template(tpl)
+    return html(template.render(kwargs))
 
 
-@app.route("/")
-async def test(request):
-    return json({"hello": "world"})
+app = Sanic(__name__)
+app.static('/static', './static')
+
+
+@app.route('/')
+async def home(request):
+    greeting = 'Hello, Sanic!'
+    link = 'https://sanic.readthedocs.io/en/latest/'
+    return template(
+        'index.html',
+        title='Sanic Website - Demo',
+        greeting=greeting,
+        button=link
+    )
+
 
 if __name__ == "__main__":
-    app.run(host="0.0.0.0", port=8000)
+    app.run(host='127.0.0.1', port=8000)
