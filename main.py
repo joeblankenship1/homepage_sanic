@@ -33,6 +33,19 @@ async def home(request):
     )
 
 
+# define our function for our homepage
+@app.route('/about')
+async def about(request):
+    greeting = 'About'
+    link = 'https://github.com/huge-success/sanic'
+    return template(
+        'about.html',
+        title='Sanic Website - Demo',
+        greeting=greeting,
+        link=link
+    )
+
+
 # run the main.py on http://localhost:8000
 if __name__ == "__main__":
     app.run(host='127.0.0.1', port=8000)
