@@ -1,5 +1,5 @@
 from sanic import Sanic
-from sanic.response import json, html, text
+from sanic.response import html
 from jinja2 import Environment, PackageLoader, select_autoescape
 
 # define the environment for the Jinja2 templates
@@ -48,4 +48,4 @@ async def about(request):
 
 # run the main.py on http://localhost:8000
 if __name__ == "__main__":
-    app.run(host='127.0.0.1', port=8000)
+    app.run(host='0.0.0.0', port=8000)
