@@ -17,7 +17,8 @@ def template(tpl, **kwargs):
 
 # create the Sanic app and serve it statically
 app = Sanic(__name__)
-app.static('/static', './static')
+# if you have static files in /static directory, use the below statement
+# app.static('/static', './static')
 
 
 # define our function for our homepage
